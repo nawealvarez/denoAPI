@@ -6,7 +6,7 @@ interface User {
   name: string
 }
 
-const users: User[] = [
+let users: User[] = [
   {
     id: '1',
     name: 'Ryan Rynolds',
@@ -64,5 +64,32 @@ export const createUser = async ({
         }
     }
 };
-export const deleteUser = () => {};
-export const updateUser = () => {};
+export const deleteUser = (
+    { params, response}: { params: {id: string}, response: Response }
+) => {
+    users = users.filter(user => user.id !== params.id);
+    response.status = 200;
+    response.body = {
+        message: 'User deleted'
+    }
+};
+export const updateUser = async (
+    { params, request, response}: { params: {id: string}, request: Request, response: Response }) => {
+        const userFound = users.find(user =>user.id === params.id);
+        if (!userFound) {
+            response.status = 404;
+            response.body = {
+                message: 'User not found'
+            }
+        } else {
+            const body = await request.body();
+            const updatedUser = body.value;
+            
+            users = users.map(user => user.id === params.id ? {...user, ...updatedUser} : user);
+            response.status = 200;
+            response.body = {
+                message: 'User updated',
+                users
+            }
+        }
+    };
