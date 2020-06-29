@@ -19,11 +19,24 @@ export const getUsers = ({ response }: { response: Response }) => {
     users,
   };
 };
-export const getUser = () => {};
+export const getUser = (
+    { params, response}: { params: {id: string}, response: Response }) => {
+        const userFound = users.find(user => user.id === params.id)
+        if (userFound) {
+            response.status = 200;
+            response.body = {
+                message: 'You get a single user',
+                userFound
+            }
+        } else {
+            response.status = 404;
+            response.body = {
+                message: 'User not found'
+            }
+        }
+    };
 
-interface userBody {
-    name: string
-}
+
 export const createUser = async ({
   response,
   request,
@@ -33,13 +46,22 @@ export const createUser = async ({
 }) => {
     const body: Body = await request.body();
 
-    const newUser: userBody = body.value;
-    users.push({
-        id: v4.,
-        name: newUser.name
-    })
+    if (!request.hasBody) {
+        response.status = 404;
+        response.body = {
+            message: "Body is required"
+        }
+    } else {
+    const newUser: User = body.value;
+    newUser.id = v4.generate();
+
+    users.push(newUser)
+
+    response.status = 200;
     response.body = {
-        messages: 'received'
+        messages: 'New User created',
+        newUser
+        }
     }
 };
 export const deleteUser = () => {};

@@ -10,5 +10,6 @@ router.get('/', ({response}) => {
 
 router.get('/users', indexCtrl.getUsers);
 router.post('/users', indexCtrl.createUser);
+router.get('/users/:id', indexCtrl.getUser);
 
 export default router;
