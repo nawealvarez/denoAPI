@@ -5,7 +5,7 @@ const router = new Router();
 
 router.get('/', ({response}) => {
     console.log('Ejecuntando deno')
-    response.body = 'Hello World'
+    response.body = 'Welcome to my Deno Api 🐉'
 });
 
 router.get('/users', indexCtrl.getUsers);
