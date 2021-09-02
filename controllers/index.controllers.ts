@@ -52,7 +52,7 @@ export const createUser = async ({
             message: "Body is required"
         }
     } else {
-    const newUser: User = body?.value;
+    const newUser: User | undefined = body?.value;
     newUser.id = v4.generate();
 
     users.push(newUser)
