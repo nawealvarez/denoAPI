@@ -83,7 +83,7 @@ export const updateUser = async (
             }
         } else {
             const body = await request.body();
-            const updatedUser = body.value;
+            const updatedUser = body?.value;
             
             users = users.map(user => user.id === params.id ? {...user, ...updatedUser} : user);
             response.status = 200;
