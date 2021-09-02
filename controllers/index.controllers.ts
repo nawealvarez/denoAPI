@@ -52,10 +52,10 @@ export const createUser = async ({
             message: "Body is required"
         }
     } else {
-    const newUser: User | undefined = body?.value;
-    newUser.id = v4.generate();
-
-    users.push(newUser)
+    const newUser: User = body?.value;
+    newUser?.id = v4.generate();
+    
+    if (newUser) users.push(newUser);
 
     response.status = 200;
     response.body = {
