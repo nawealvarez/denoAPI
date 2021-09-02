@@ -53,9 +53,11 @@ export const createUser = async ({
         }
     } else {
     const newUser: any = body?.value;
-    if (newUser) newUser?.id = v4.generate();
+    if (newUser) {
+        newUser.id = v4.generate();
     
-    if (newUser) users.push(newUser);
+        users.push(newUser);
+    }
 
     response.status = 200;
     response.body = {
